@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:background="?android:attr/selectableItemBackground" >
+
+    <RelativeLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:padding="@dimen/list_padding" >
+
+        <FrameLayout
+            android:id="@+id/img_container"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginRight="@dimen/prod_image_right_margin" >
+            <ImageView
+                android:id="@+id/prod_image"
+                android:layout_height="@dimen/prod_image_height"
+                android:layout_width="@dimen/prod_image_width"
+                android:src="@drawable/splash_logo" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/name_price_container"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_toEndOf="@id/img_container"
+            android:layout_alignParentTop="true">
+
+            <TextView
+                android:id="@+id/prod_name"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:text="Product NameProduct NameProduct NameProduct NameProduct" />
+
+
+            <TextView
+                android:id="@+id/prod_price"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/colorPrimaryDark"
+                android:text="Price" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/prod_rating"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_toEndOf="@id/img_container"
+            android:layout_below="@id/name_price_container" />
+
+        <TextView
+            android:id="@+id/prod_reviews"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_toEndOf="@id/prod_rating"
+            android:layout_below="@id/name_price_container" />
+    </RelativeLayout>
+</LinearLayout>
