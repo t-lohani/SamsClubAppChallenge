@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The padding for the product in the ListView of Home screen -->
+    <dimen name="list_padding">5dip</dimen>
+    <!-- The height for the product in the ListView of Home screen -->
+    <dimen name="prod_image_height">80dip</dimen>
+    <!-- The width for the product in the ListView of Home screen -->
+    <dimen name="prod_image_width">100dip</dimen>
+    <!-- The right margin of the image view -->
+    <dimen name="prod_image_right_margin">10dip</dimen>
+</resources>
