@@ -44,10 +44,10 @@ public class HomeScreen extends Activity {
         try {
             mainObject = new JSONObject(json);
             JSONArray products = mainObject.getJSONArray("products");
-            Log.d("Tarun", products.toString());
+//            Log.d("Tarun", products.toString());
             for (int i=0; i<products.length(); i++) {
                 JSONObject product = products.getJSONObject(i);
-                ItemSummary is = new ItemSummary(Uri.parse(product.getString("productImage")),
+                ItemSummary is = new ItemSummary(product.getString("productImage"),
                         product.getString("productName"), product.getString("price"),
                         product.getString("reviewRating"), product.getString("reviewCount"));
                 itemList.add(is);
@@ -74,7 +74,13 @@ public class HomeScreen extends Activity {
             }
         }));
 
-        mAdapter = new ItemSummaryAdapter(itemList);
+        mAdapter = new ItemSummaryAdapter(itemList, this);
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void onDestroy() {
+        mRecyclerView.setAdapter(null);
+        super.onDestroy();
     }
 }

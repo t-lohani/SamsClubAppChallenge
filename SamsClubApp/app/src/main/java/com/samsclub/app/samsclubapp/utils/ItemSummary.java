@@ -8,10 +8,9 @@ import android.net.Uri;
  */
 
 public class ItemSummary {
-    private String prodName, prodPrice, prodRating, reviewCount;
-    private Uri imgUrl;
+    private String imgUrl, prodName, prodPrice, prodRating, reviewCount;
 
-    public ItemSummary(Uri imgUrl, String prodName, String prodPrice,
+    public ItemSummary(String imgUrl, String prodName, String prodPrice,
                        String prodRating, String reviewCount) {
         this.imgUrl = imgUrl;
         this.prodName = prodName;
@@ -20,11 +19,11 @@ public class ItemSummary {
         this.reviewCount = reviewCount;
     }
 
-    public Uri getImgUrl() {
+    public String getImgUrl() {
         return imgUrl;
     }
 
-    public void setImgUrl(Uri imgUrl) {
+    public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
     }
 
