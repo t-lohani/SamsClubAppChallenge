@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by TARUN on 10/4/2017.
@@ -29,7 +31,6 @@ import java.util.List;
 
 public class ItemSummaryAdapter extends RecyclerView.Adapter<ItemSummaryAdapter.MyViewHolder> {
 
-    private List<ItemSummary> itemList;
     private ImageLoader imageLoader;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -46,8 +47,7 @@ public class ItemSummaryAdapter extends RecyclerView.Adapter<ItemSummaryAdapter.
         }
     }
 
-    public ItemSummaryAdapter(List<ItemSummary> itemList, Activity activity) {
-        this.itemList = itemList;
+    public ItemSummaryAdapter(Activity activity) {
         imageLoader = new ImageLoader(activity.getApplicationContext());
     }
 
@@ -60,7 +60,7 @@ public class ItemSummaryAdapter extends RecyclerView.Adapter<ItemSummaryAdapter.
     }
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        ItemSummary item = itemList.get(position);
+        ItemSummary item = DataMapper.datamap.get(position);
 //        holder.prodImage.setImageURI(item.getImgUrl());
         holder.prodName.setText(item.getProdName());
         holder.prodPrice.setText(item.getProdPrice());
@@ -74,7 +74,7 @@ public class ItemSummaryAdapter extends RecyclerView.Adapter<ItemSummaryAdapter.
 
     @Override
     public int getItemCount() {
-        return itemList.size();
+        return DataMapper.itemCount;
     }
 }
 

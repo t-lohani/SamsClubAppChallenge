@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.samsclub.app.samsclubapp.R;
 import com.samsclub.app.samsclubapp.listeners.RecyclerTouchListener;
+import com.samsclub.app.samsclubapp.utils.DataMapper;
 import com.samsclub.app.samsclubapp.utils.ItemSummary;
 import com.samsclub.app.samsclubapp.utils.ItemSummaryAdapter;
 
@@ -28,33 +29,10 @@ public class HomeScreen extends Activity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private List<ItemSummary> itemList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
-
-        Intent intent = getIntent();
-        String json = intent.getStringExtra("json");
-
-//        Log.d("Tarun", json);
-
-        JSONObject mainObject = null;
-        itemList = new ArrayList<>();
-        try {
-            mainObject = new JSONObject(json);
-            JSONArray products = mainObject.getJSONArray("products");
-//            Log.d("Tarun", products.toString());
-            for (int i=0; i<products.length(); i++) {
-                JSONObject product = products.getJSONObject(i);
-                ItemSummary is = new ItemSummary(product.getString("productImage"),
-                        product.getString("productName"), product.getString("price"),
-                        product.getString("reviewRating"), product.getString("reviewCount"));
-                itemList.add(is);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_items);
         mRecyclerView.setHasFixedSize(true);
@@ -65,7 +43,7 @@ public class HomeScreen extends Activity {
 
         mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), mRecyclerView, new RecyclerTouchListener.ClickListener() {
             public void onClick(View view, int position) {
-                ItemSummary movie = itemList.get(position);
+                ItemSummary movie = DataMapper.datamap.get(position);
                 Toast.makeText(getApplicationContext(), movie.getProdName() + " is selected!", Toast.LENGTH_SHORT).show();
             }
 
@@ -74,7 +52,7 @@ public class HomeScreen extends Activity {
             }
         }));
 
-        mAdapter = new ItemSummaryAdapter(itemList, this);
+        mAdapter = new ItemSummaryAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
     }
 

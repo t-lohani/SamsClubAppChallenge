@@ -58,4 +58,10 @@ public class ItemSummary {
     public void setReviewCount(String reviewCount) {
         this.reviewCount = reviewCount;
     }
+
+    @Override
+    public String toString() {
+        return "prodName: " + prodName + " prodPrice : " + prodPrice
+                + " prodRating : " + prodRating + " reviewCount : " + reviewCount;
+    }
 }

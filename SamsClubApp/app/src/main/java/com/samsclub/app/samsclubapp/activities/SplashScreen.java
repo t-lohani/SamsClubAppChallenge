@@ -5,10 +5,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import com.samsclub.app.samsclubapp.R;
+import com.samsclub.app.samsclubapp.utils.DataMapper;
+import com.samsclub.app.samsclubapp.utils.ItemSummary;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -53,7 +58,8 @@ public class SplashScreen extends Activity {
          */
             HttpURLConnection connection = null;
             BufferedReader reader = null;
-            String urlStr = "https://walmartlabs-test.appspot.com/_ah/api/walmart/v1/walmartproducts/ba8c4ec4-b5b9-4ece-8db2-9695361737b9/1/30";
+            String urlStr = "https://walmartlabs-test.appspot.com/_ah/api/walmart/v1/" +
+                    "walmartproducts/ba8c4ec4-b5b9-4ece-8db2-9695361737b9/1/10";
 
             try {
                 URL url = new URL(urlStr);
@@ -73,6 +79,23 @@ public class SplashScreen extends Activity {
 
                 json = buffer.toString();
 //                Log.d("Tarun", json);
+
+                JSONObject mainObject = null;
+                try {
+                    mainObject = new JSONObject(json);
+                    JSONArray products = mainObject.getJSONArray("products");
+//                  Log.d("Tarun", products.toString());
+                    for (int i=0; i<products.length(); i++) {
+                        JSONObject product = products.getJSONObject(i);
+                        ItemSummary summary = new ItemSummary(product.getString("productImage"),
+                                product.getString("productName"), product.getString("price"),
+                                product.getString("reviewRating"), product.getString("reviewCount"));
+                        DataMapper.datamap.put(DataMapper.itemCount++, summary);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
                 return null;
 
             } catch (MalformedURLException e) {
@@ -100,7 +123,7 @@ public class SplashScreen extends Activity {
             // After completing http call
             // will close this activity and lauch home screen
             Intent intent = new Intent(SplashScreen.this, HomeScreen.class);
-            intent.putExtra("json", json);
+//            intent.putExtra("json", json);
             startActivity(intent);
 
             // close this activity
