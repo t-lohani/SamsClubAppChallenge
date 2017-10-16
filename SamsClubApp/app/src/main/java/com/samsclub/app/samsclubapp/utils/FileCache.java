@@ -1,6 +1,8 @@
 package com.samsclub.app.samsclubapp.utils;
 
 import android.content.Context;
+import android.os.Environment;
+import android.util.Log;
 
 import java.io.File;
 
@@ -16,21 +18,19 @@ public class FileCache {
 
         //Find the dir at SDCARD to save cached images
 
-        if (android.os.Environment.getExternalStorageState().equals(
-                android.os.Environment.MEDIA_MOUNTED))
-        {
+        if (Environment.getExternalStorageState().equals(
+                android.os.Environment.MEDIA_MOUNTED)) {
             //if SDCARD is mounted (SDCARD is present on device and mounted)
-            cacheDir = new File(
-                    android.os.Environment.getExternalStorageDirectory(),"LazyList");
-        }
-        else
-        {
+            cacheDir = new File(Environment.getExternalStorageDirectory()+File.separator+"SamsClubApp");
+        } else {
+            Log.d("Tarun", "No SD Card");
             // if checking on simulator the create cache dir in your application context
-            cacheDir=context.getCacheDir();
+            cacheDir = context.getCacheDir();
         }
 
-        if(!cacheDir.exists()){
+        if(!cacheDir.exists()) {
             // create cache dir in your application context
+            Log.d("Tarun", "Making dirs");
             cacheDir.mkdirs();
         }
     }
@@ -41,7 +41,6 @@ public class FileCache {
 
         File f = new File(cacheDir, filename);
         return f;
-
     }
 
     public void clear(){

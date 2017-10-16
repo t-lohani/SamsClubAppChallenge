@@ -67,9 +67,10 @@ public class ItemSummaryAdapter extends RecyclerView.Adapter<ItemSummaryAdapter.
         holder.prodRating.setText(String.valueOf(item.getProdRating()) + "/5.0     Reviews : ");
         holder.reviewCount.setText(String.valueOf(item.getReviewCount()));
 
-        ImageView image = holder.prodImage;
-        new ImageLoaderClass(Uri.parse(item.getImgUrl()), image, 128, 128).execute();
-//        imageLoader.DisplayImage(itemList.get(position).getImgUrl(), image);
+        ImageView imageView = holder.prodImage;
+//        new ImageLoaderClass(Uri.parse(item.getImgUrl()), image, 128, 128).execute();
+        //Log.d("Tarun", "Call to displayImage. Position : " + position);
+        imageLoader.displayImage(DataMapper.datamap.get(position).getImgUrl(), imageView);
     }
 
     @Override
@@ -78,6 +79,8 @@ public class ItemSummaryAdapter extends RecyclerView.Adapter<ItemSummaryAdapter.
     }
 }
 
+// Not using this class.
+/*
 class ImageLoaderClass extends AsyncTask<Object, Object, Bitmap> {
     private Uri imageUri;
 
@@ -130,4 +133,4 @@ class ImageLoaderClass extends AsyncTask<Object, Object, Bitmap> {
     public void onPostExecute(Bitmap drawable ) {
         imageView.setImageBitmap(drawable);
     }
-}
+}*/

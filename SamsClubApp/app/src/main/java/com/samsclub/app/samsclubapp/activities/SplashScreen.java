@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.samsclub.app.samsclubapp.R;
@@ -59,7 +60,7 @@ public class SplashScreen extends Activity {
             HttpURLConnection connection = null;
             BufferedReader reader = null;
             String urlStr = "https://walmartlabs-test.appspot.com/_ah/api/walmart/v1/" +
-                    "walmartproducts/ba8c4ec4-b5b9-4ece-8db2-9695361737b9/1/10";
+                    "walmartproducts/ba8c4ec4-b5b9-4ece-8db2-9695361737b9/0/30";
 
             try {
                 URL url = new URL(urlStr);
@@ -92,7 +93,10 @@ public class SplashScreen extends Activity {
                                 product.getString("reviewRating"), product.getString("reviewCount"));
                         DataMapper.datamap.put(DataMapper.itemCount++, summary);
                     }
+                    DataMapper.pageCount++;
                 } catch (JSONException e) {
+//                    Log.d("Tarun", "JSON Exception");
+                    DataMapper.endOfData = true;
                     e.printStackTrace();
                 }
 

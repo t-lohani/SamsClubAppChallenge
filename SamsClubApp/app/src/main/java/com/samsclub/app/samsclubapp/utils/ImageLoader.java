@@ -42,22 +42,21 @@ public class ImageLoader {
     Handler handler = new Handler();
 
     public ImageLoader(Context context){
-
         fileCache = new FileCache(context);
-
         executorService = Executors.newFixedThreadPool(5);
     }
 
     final int stub_id = R.drawable.stub;
 
-    public void DisplayImage(String url, ImageView imageView) {
+    public void displayImage(String url, ImageView imageView) {
         imageViews.put(imageView, url);
-
         Bitmap bitmap = memoryCache.get(url);
 
         if(bitmap!=null){
+            //Log.d("Tarun", "Setting bitmap");
             imageView.setImageBitmap(bitmap);
         } else {
+            //Log.d("Tarun", "Bitmap is null");
             queuePhoto(url, imageView);
             imageView.setImageResource(stub_id);
         }
@@ -65,7 +64,6 @@ public class ImageLoader {
 
     private void queuePhoto(String url, ImageView imageView) {
         PhotoToLoad p = new PhotoToLoad(url, imageView);
-
         executorService.submit(new PhotosLoader(p));
     }
 
@@ -107,10 +105,9 @@ public class ImageLoader {
         }
     }
 
-    private Bitmap getBitmap(String url)
-    {
+    private Bitmap getBitmap(String url) {
+//        Log.d("Tarun", url);
         File f = fileCache.getFile(url);
-
         Bitmap b = decodeFile(f);
         if(b!=null)
             return b;
@@ -123,21 +120,20 @@ public class ImageLoader {
             conn.setReadTimeout(30000);
             conn.setInstanceFollowRedirects(true);
             InputStream is = conn.getInputStream();
-            Log.d("Tarun", "File : " + f);
+            //Log.d("Tarun", "File : " + f);
             OutputStream os = new FileOutputStream(f);
-            Log.d("Tarun", "Hahaha");
             Utils.CopyStream(is, os);
             os.close();
             conn.disconnect();
-
             bitmap = decodeFile(f);
-
             return bitmap;
 
         } catch (Throwable ex){
             ex.printStackTrace();
-            if(ex instanceof OutOfMemoryError)
+            if(ex instanceof OutOfMemoryError) {
                 memoryCache.clear();
+            }
+//            Log.d("Tarun", ex.toString());
             return null;
         }
     }

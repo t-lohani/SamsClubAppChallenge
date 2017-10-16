@@ -39,33 +39,32 @@ public class MemoryCache {
     }
 
     public Bitmap get(String id){
-        try{
+        try {
             if(!cache.containsKey(id))
                 return null;
 
             return cache.get(id);
-
-        }catch(NullPointerException ex){
+        } catch(NullPointerException ex){
             ex.printStackTrace();
             return null;
         }
     }
 
     public void put(String id, Bitmap bitmap){
-        try{
+        try {
             if(cache.containsKey(id))
                 size-=getSizeInBytes(cache.get(id));
             cache.put(id, bitmap);
             size+=getSizeInBytes(bitmap);
             checkSize();
-        }catch(Throwable th){
+        } catch(Throwable th){
             th.printStackTrace();
         }
     }
 
     private void checkSize() {
         Log.i(TAG, "cache size="+size+" length="+cache.size());
-        if(size>limit){
+        if(size > limit){
 
             //least recently accessed item will be the first one iterated
             Iterator<Map.Entry<String, Bitmap>> iter=cache.entrySet().iterator();
@@ -91,7 +90,7 @@ public class MemoryCache {
     }
 
     long getSizeInBytes(Bitmap bitmap) {
-        if(bitmap==null)
+        if(bitmap == null)
             return 0;
         return bitmap.getRowBytes() * bitmap.getHeight();
     }
